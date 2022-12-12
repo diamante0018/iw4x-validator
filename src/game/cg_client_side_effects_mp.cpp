@@ -2,6 +2,9 @@
 
 #include <console.hpp>
 
+#include "cg_client_side_effects_mp.hpp"
+#include "q_shared.hpp"
+
 #define MAX_CLIENT_ENT_SOUNDS 1024
 
 #define SKIP_LINE(buffer, text) \
@@ -75,7 +78,7 @@ namespace game
 
 		if (std::strncmp(skip_text, line, std::strlen(skip_text)) != 0)
 		{
-			strncpy_s(error_text, sizeof(error_text), line, sizeof(error_text) - 1);
+			I_strncpyz(error_text, line, sizeof(error_text));
 			console::error("Unexpected text '%s' when trying to find '%s' in map's effect file\n", error_text, skip_text);
 			return nullptr;
 		}
@@ -123,7 +126,7 @@ namespace game
 
 		if (*line != '"')
 		{
-			strncpy_s(error_text, sizeof(error_text), line, sizeof(error_text) - 1);
+			I_strncpyz(error_text, line, sizeof(error_text));
 			console::error("Expected a quoted string instead of '%s'\n");
 			return nullptr;
 		}
@@ -139,7 +142,7 @@ namespace game
 
 		if (i == buffer_size)
 		{
-			strncpy_s(error_text, sizeof(error_text), line, sizeof(error_text) - 1);
+			I_strncpyz(error_text, line, sizeof(error_text));
 			console::error("String was longer than expected '%s'\n", error_text);
 			return nullptr;
 		}
@@ -171,9 +174,9 @@ namespace game
 	{
 		char error_text[128]{};
 
-		if (sscanf_s(line, "%f", value) != 1)
+		if (sscanf(line, "%f", value) != 1)
 		{
-			strncpy_s(error_text, sizeof(error_text), line, sizeof(error_text) - 1);
+			I_strncpyz(error_text, line, sizeof(error_text));
 			console::error("Expected a float instead of '%s'\n", error_text);
 			return nullptr;
 		}
@@ -193,9 +196,9 @@ namespace game
 	{
 		char error_text[128]{};
 
-		if (sscanf_s(line, "%f, %f, %f", origin, origin + 1, origin + 2) != 3)
+		if (sscanf(line, "%f, %f, %f", origin, origin + 1, origin + 2) != 3)
 		{
-			strncpy_s(error_text, sizeof(error_text), line, sizeof(error_text) - 1);
+			I_strncpyz(error_text, line, sizeof(error_text));
 			console::error("Expected 3 floats instead of '%s'\n", error_text);
 			return nullptr;
 		}
@@ -316,7 +319,7 @@ namespace game
 				}
 				else
 				{
-					strncpy_s(error_text, sizeof(error_text), buffer, sizeof(error_text) - 1);
+					I_strncpyz(error_text, buffer, sizeof(error_text));
 					console::error("Expected 'ent = createLoopSound();' or 'ent = createOneshotEffect' instead of '%s' in map's effect file\n", error_text);
 					return false;
 				}
@@ -326,7 +329,7 @@ namespace game
 		buffer = skip_line_starting_with(buffer, "}");
 		if (buffer && *buffer)
 		{
-			strncpy_s(error_text, sizeof(error_text), buffer, sizeof(error_text) - 1);
+			I_strncpyz(error_text, buffer, sizeof(error_text));
 			console::error("Unexpected data after parsing '%s' map's effect file\n", error_text);
 			return false;
 		}

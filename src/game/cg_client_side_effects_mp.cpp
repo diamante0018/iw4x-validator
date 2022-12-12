@@ -76,19 +76,19 @@ namespace game
 	{
 		char error_text[128]{};
 
-		if (std::strncmp(skip_text, line, std::strlen(skip_text)) != 0)
+		if (strncmp(skip_text, line, strlen(skip_text)) != 0)
 		{
 			I_strncpyz(error_text, line, sizeof(error_text));
 			console::error("Unexpected text '%s' when trying to find '%s' in map's effect file\n", error_text, skip_text);
 			return nullptr;
 		}
 
-		return &line[std::strlen(skip_text)];
+		return &line[strlen(skip_text)];
 	}
 
 	const char* skip_white_space(const char* line)
 	{
-		while (std::isspace(static_cast<unsigned char>(*line)))
+		while (isspace(static_cast<unsigned char>(*line)))
 		{
 			++line;
 		}
@@ -117,7 +117,7 @@ namespace game
 
 	bool match_line_starting_with(const char* line, const char* start_line)
 	{
-		return std::strncmp(start_line, line, std::strlen(start_line)) == 0;
+		return strncmp(start_line, line, strlen(start_line)) == 0;
 	}
 
 	const char* parse_string(const char* line, char* text, unsigned int buffer_size)

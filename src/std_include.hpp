@@ -26,6 +26,7 @@
 	#undef min
 #endif
 
+#include <algorithm>
 #include <cassert>
 #include <csignal>
 #include <cstdarg>

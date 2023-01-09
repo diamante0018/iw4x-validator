@@ -65,7 +65,7 @@ namespace map_rotation
 			}
 			else
 			{
-				throw parse_rotation_error();
+				throw map_rotation_parse_error();
 			}
 		}
 	}

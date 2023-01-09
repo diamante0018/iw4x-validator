@@ -36,8 +36,11 @@
 #include <functional>
 #include <iostream>
 #include <mutex>
+#include <random>
+#include <ranges>
 #include <sstream>
 #include <utility>
+#include <vector>
 
 #ifdef _WIN32
 #pragma comment(lib, "ntdll.lib")
